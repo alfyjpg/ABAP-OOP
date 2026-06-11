@@ -19,23 +19,26 @@ CLASS car DEFINITION.
 
   PUBLIC SECTION.
 
-"constrcutors also come in the public section.
+    CLASS-METHODS class_constructor.     "Static constrcutor
+    CLASS-DATA numberofcars TYPE i.      "static attribute 1
+    CLASS-DATA carlog TYPE c LENGTH 100. "static attribute 2
 
-  METHODS constructor
-    IMPORTING
-      make           TYPE c
-      model         TYPE c
-      numberofseats TYPE i
-      maxspeed      TYPE i.
+    METHODS constructor   " Normal constrcutor | constructors also come in the public section.
+      IMPORTING
+        make          TYPE c
+        model         TYPE c
+        numberofseats TYPE i
+        maxspeed      TYPE i.
 
 
-    DATA: make          TYPE c,
+    DATA: make          TYPE c LENGTH 10,  " Declaration of Attributes
           model         TYPE c,
           numberofseats TYPE i,
           speed         TYPE i,
           maxspeed      TYPE i.
 
-    CLASS-DATA numberofcars TYPE i.   "static attribute
+
+    " Methods Declaration
 
     METHODS setnumseats
       IMPORTING numseat TYPE i.
@@ -48,7 +51,7 @@ CLASS car DEFINITION.
       IMPORTING decrement     TYPE i
       RETURNING VALUE(result) TYPE i.
 
-    methods viewCar.
+    METHODS viewcar. "Method ohne Importing/Exporting
 
 
 
@@ -56,15 +59,20 @@ ENDCLASS.
 
 CLASS car IMPLEMENTATION.
 
-  " Das nutzen von me-> ist genau ähnlich mit dem Nutzen von this. in Java.
+  METHOD class_constructor. "Static constructor.
+    carlog = 'The object from the class car has been successfully initiated'.
+    WRITE : carlog,/.
+  ENDMETHOD.
 
-  METHOD constructor.
+  METHOD constructor.     "Normal constrcutor
     me->make = make.
     me->model = model.
     me->numberofseats = numberofseats.
     me->maxspeed = maxspeed.
 
-    numberofcars = numberofcars + 1. "Initial value of variables from type i is 0
+    numberofcars = numberofcars +   1. "Static attribute. Initial value of variables from type i is 0
+
+    " Das nutzen von me-> ist genau ähnlich mit dem Nutzen von this. in Java.
   ENDMETHOD.
 
   METHOD setnumseats.
@@ -99,39 +107,76 @@ CLASS car IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD viewCar.
+  METHOD viewcar.
 
-    write : 'Make : ', 15 make,/.
-    write : 'Model:', 15 model,/.
-    write : 'Number of Seats: ', 15 numberofseats,/.
-    write : 'Max Speed: ', 15 maxspeed,/.
-    write : 'Serialnumber: ', 15 numberofcars,/.
+    WRITE : 'Make : ', 15 make.
+    WRITE : /'Model:', 15 model.
+    WRITE : /'Number of Seats: ', 15 numberofseats.
+    WRITE : /'Max Speed: ', 15 maxspeed.
+    WRITE : /'Serialnumber: ', 15 numberofcars.
+    WRITE :/ 'Speed: ', speed.
 
-    ENDMETHOD.
+  ENDMETHOD.
 
 ENDCLASS.
 
+START-OF-SELECTION.
 
-"Erstellen von Objeckt ohne Constructor
-
+* Erstellen von Objeckt ohne Constructor
+*
 *DATA car1 TYPE REF TO car.
 *create object car1.
 
 
-start-of-selection.
+  "Erstellen ein Objekt mit Constructor
+  DATA :car1      TYPE REF TO car,
+        theresult TYPE i.
 
-"Erstellen ein Objekt mit Constructor
+  "Remember, we are outside the class. So we look to the 4 Statment from the prespective of the user.
+  "Here the user is exporting variables to constructor.
+  CREATE OBJECT car1
+    EXPORTING
+      make          = 'BMW'
+      model         = '200C'
+      numberofseats = 5
+      maxspeed      = 250.
 
-DATA car1 TYPE REF TO car.
 
-"Remember, we are outside the class. So we look to the 4 Statment from the prespective of the user.
-" Here the user is exporting variables to constructor.
+  car1->viewcar( ). "Calling a normal Method.
+  ULINE.
 
-CREATE OBJECT car1
-  EXPORTING
-    make        = 'BMW'
-    model         = '200C'
-    numberofseats = 5
-    maxspeed      = 250.
+  car1->setnumseats( 10 ). "Calling a method with 1 pararmeter.
 
-uline.
+  car1->viewcar( ).
+  ULINE.
+
+  car1->setnumseats( numseat = 5 ). "Calling a method with 1 parameter but another alternative way of writting
+  "Where parameter = data.
+  car1->viewcar( ).
+  ULINE.
+
+
+  car1->gofaster( EXPORTING increment = 50  IMPORTING result = theresult ). "Calling a method with import and export statment.
+
+  car1->viewcar( ).
+  WRITE:/ 'We added', theresult, 'KM/H'.
+  ULINE.
+
+
+  car1->goslower( EXPORTING decrement = 10  RECEIVING result = theresult ). "Calling a method with import and retrurning statment.
+  car1->viewcar( ).                                                           "Notice that returning turns into recieving when we call it
+  WRITE:/ 'new speed is: ', theresult, 'KM/H'.
+  ULINE.
+
+
+write: 'Q: How many number of cars have we produced so far?'.
+write: 'A: Well, we have so far produced', car=>numberofcars, 'so far. '.
+
+
+"Another way of using returning / functional method
+
+theresult = car1->goslower( exporting decrement = 5 ).
+
+ car1->viewcar( ).
+  WRITE:/ 'new speed is (using functional method): ', theresult, 'KM/H'.
+  ULINE.
