@@ -14,6 +14,7 @@ CLASS student DEFINITION.
           age    TYPE i,
           gender TYPE c value 'U'.
 
+"Static Attribute
     CLASS-DATA counter TYPE i.
 
 
