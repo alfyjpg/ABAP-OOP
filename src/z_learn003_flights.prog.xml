@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <PROGDIR>
-    <NAME>Z_LEARN003_INTERNAL_TABLES</NAME>
+    <NAME>Z_LEARN003_FLIGHTS</NAME>
     <SUBC>1</SUBC>
     <RSTAT>S</RSTAT>
     <RLOAD>D</RLOAD>
@@ -13,7 +13,7 @@
    <TPOOL>
     <item>
      <ID>R</ID>
-     <ENTRY>Programm Z_LEARN003_INTERNAL_TABLES</ENTRY>
+     <ENTRY>Programm Z_LEARN003_Flights</ENTRY>
      <LENGTH>35</LENGTH>
     </item>
    </TPOOL>
