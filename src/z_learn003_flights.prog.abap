@@ -35,7 +35,7 @@ CLASS flights DEFINITION.
       IMPORTING id           TYPE spfli-connid
       RETURNING VALUE(table) TYPE spfli.
 
-methods printoutwa
+methods printoutwa              "Method 7
 importing itab_satz type spfli.
 
   PRIVATE SECTION.
@@ -148,23 +148,19 @@ CLASS flights IMPLEMENTATION.
                                                   airpfrom = departure.
 
     id = itab_aus-connid.
-*    IF sy-subrc = 0.
-*      WRITE: 'The connection ID between:', departure, 'und', arrival, 'is:', id,/.
-*    ELSE.
-*      WRITE: 'The connection ID between:', departure, 'und', arrival, 'exisitert nicht',/.
-*    ENDIF.
+*
 
 *  LOOP AT itab INTO DATA(itab_satz)
 *    WHERE airpfrom = departure AND airpto = arrival.
 *
 *    id = itab_satz-connid.
 *  ENDLOOP.
-*
-*  IF sy-subrc = 0.
-*    WRITE: 'The connection ID between:', departure, 'und', arrival, 'is:', id,/.
-*  ELSE.
-*    WRITE: 'The connection ID between:', departure, 'und', arrival, 'exisitert nicht',/.
-*  ENDIF.
+* IF sy-subrc = 0.
+*      WRITE: 'The connection ID between:', departure, 'und', arrival, 'is:', id,/.
+*    ELSE.
+*      WRITE: 'The connection ID between:', departure, 'und', arrival, 'exisitert nicht',/.
+*    ENDIF.
+
 
   ENDMETHOD.
 
@@ -178,8 +174,8 @@ CLASS flights IMPLEMENTATION.
     time = itab_aus-fltime.
 
 
- "   WRITE: 'The Flying time for the connection:', id, 'is: ', time, /.
-
+*   WRITE: 'The Flying time for the connection:', id, 'is: ', time, /.
+*
 *    DATA time TYPE spfli-fltime.
 *    LOOP AT itab INTO DATA(itab_aus) WHERE connid = id.
 *
@@ -226,7 +222,7 @@ CLASS flights IMPLEMENTATION.
 *      ENDIF.
 *    ENDLOOP.
   ENDMETHOD.
-
+" Method 6
 
   method printoutwa.
     WRITE : 'CARRID:', itab_satz-carrid, 'CONID:', itab_satz-connid, 'COUNTRYFR:', itab_satz-countryfr.
