@@ -49,7 +49,8 @@ CLASS car DEFINITION INHERITING FROM vehicle.
   " Public Section
   PUBLIC SECTION.
 
-    METHODS: refuel. "Method 1
+    METHODS: refuel, "Method 1
+             writespeed REDEFINITION.
 
     "protected section
   PROTECTED SECTION.
@@ -72,6 +73,13 @@ CLASS car IMPLEMENTATION.
   ENDMETHOD.
 
 
+method writespeed.
+
+  " Overriding a method from teh superclass vehicel
+  write : 'The Car speed is: ', me->speed, / .
+
+  endmethod.
+
 ENDCLASS.
 
 
@@ -79,9 +87,22 @@ ENDCLASS.
 
 CLASS boat DEFINITION INHERITING FROM vehicle.
 
+  public SECTION.
+  methods writespeed redefinition.
+
 ENDCLASS.
 
 CLASS boat IMPLEMENTATION.
+
+
+method writespeed.
+
+  " Overriding a method from teh superclass vehicel
+  write : 'The BOAT speed is: ', me->speed, /.
+
+            call method super->writespeed.  " Calling a method from the super class.
+  endmethod.
+
 
 ENDCLASS.
 
