@@ -9,13 +9,13 @@ REPORT Z_LEARN003_Inheritance.
 " Class 1 - Viehicle
 
 
-CLASS Vehicle DEFINITION .
+CLASS Vehicle DEFINITION abstract.
 
   " Public
   PUBLIC SECTION.
 
     METHODS: gofaster, "Method 1
-      writespeed. "Method 2
+      writespeed abstract. "Method 2
 
   PROTECTED SECTION.
     DATA speed TYPE p DECIMALS 2. " Attribute 1
@@ -33,11 +33,12 @@ CLASS Vehicle IMPLEMENTATION .
 
   ENDMETHOD.
 
+" Wurde deimplementiert, weil die Methode Abstrakt geworden.
 
-  METHOD writespeed.
-
-    WRITE: 'The Vehicle speed is: ', me->speed, /.
-  ENDMETHOD.
+*  METHOD writespeed.
+*
+*    WRITE: 'The Vehicle speed is: ', me->speed, /.
+*  ENDMETHOD.
 
 ENDCLASS.
 
@@ -100,7 +101,9 @@ method writespeed.
   " Overriding a method from teh superclass vehicel
   write : 'The BOAT speed is: ', me->speed, /.
 
-            call method super->writespeed.  " Calling a method from the super class.
+" Die implementierung wurde auch gelöscht, weil die Methode ist zu Abstrakt geworden und daher nicht implementierungsfähig.
+
+*          call method super->writespeed.  " Calling a method from the super class.
   endmethod.
 
 
