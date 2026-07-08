@@ -5,6 +5,10 @@
 *&---------------------------------------------------------------------*
 REPORT z_learn003_car2.
 
+* Hier probiert man den Technick von Final bei Methoden und bei Klassen
+
+" Erstmal mit Klassen
+
 CLASS vehicle DEFINITION FINAL.
 
   PUBLIC SECTION.
@@ -26,6 +30,8 @@ ENDCLASS.
 
 
 ***-------------------------- Neue Klasse ***----------------------
+
+" Nun mit Methoden
 
 CLASS vehicle2 DEFINITION.
   PUBLIC SECTION.
@@ -73,4 +79,10 @@ vehicle2->refuel( ).
 uline.
 
 car2->drive( ).
+*" Hier die Methode car2->drive( ).
+* wurde auf die Methode drive in der Superklasse zugegriffen.
+* Also nicht nur weil es finale ist, heißt es dass wir auf die Methode nicht zugreifen können,
+* aber heißt das bestimmt,
+* dass wir die Methode nicht überschreiben können.
+
 car2->refuel( ).
