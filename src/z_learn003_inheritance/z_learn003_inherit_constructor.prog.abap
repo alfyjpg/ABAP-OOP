@@ -100,3 +100,18 @@ START-OF-SELECTION.
   CREATE OBJECT: ford EXPORTING  p_model = 'FOCUS',
                  mercedez EXPORTING p_model = 'C-CLASS',
                  audi EXPORTING p_model = 'A4' wheels = 4.
+
+* The same principles apply for static constructor as for inheritence constructor.
+*
+* Declaration an inheritence constructor in a subclass redefines the inheritnce constrcutor
+* of the superclass
+*
+* Im contry to superclass redefinition, we don't use that keyword with static constructors
+*
+* Im ocntry to instant constructor in the subclass, we don't call the superclass constrcutor.
+* Because just redefining a new static constructor in the subclass automatically gives the subclass
+*  a new static method
+*
+* In every class, the static constructor is to executed first. Therefor the programm will climb
+* up the hierachy tree and excute every static onstructor backward till it reach the class
+* where the call was initally made
