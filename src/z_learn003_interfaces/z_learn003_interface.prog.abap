@@ -16,6 +16,8 @@ class train DEFINITION.
   public section.
   Interfaces: speed.
 
+ALIASES geschwindigkeit for speed~writespeed. " Using Aliases.
+
    methods: goFaster.
 
   protected section.
@@ -33,7 +35,7 @@ class train DEFINITION.
       speed = speed + 5.
       endmethod.
 
-    method speed~writespeed.
+    method speed~writespeed. " This should still the same. We don't use Aliases here.
 
       write:/ 'Aktuelle Geschwindigkeit des Zuges ist: ', speed.
       endmethod.
@@ -50,4 +52,5 @@ class train DEFINITION.
 
     train->goFaster( ).
 
-    train->speed~writespeed( ).
+ "   train->speed~writespeed( ).
+ train->geschwindigkeit( ).
