@@ -17,21 +17,16 @@ ENDCLASS.
 
 CLASS chef IMPLEMENTATION.
 
+  " This Method revoke the Event!
   METHOD call_waiter.
     WRITE:/ 'Chef is hitting the bell to call waiter because of the Event: food_cooked'.
     RAISE EVENT food_cooked.
     WRITE:/ 'Chef is done calling the waiter. Event: food_cooked is done!'.
-    uline.
+    ULINE.
 
   ENDMETHOD.
 
 ENDCLASS.
-
-
-
-
-
-
 
 CLASS customer DEFINITION.
 
@@ -54,15 +49,48 @@ CLASS customer IMPLEMENTATION.
     me->tablenumber = TableNumber.
   ENDMETHOD.
 
-
+  " This method revokes the Event
   METHOD call_waiter.
     WRITE:/ 'Customer is raising their hand to call the waiter because of the Event: need_help'.
     RAISE EVENT need_help EXPORTING TableNumber = me->tablenumber.
     WRITE:/ 'Customer is done riaisng their hand to call the waiter... Need_help event is done!'.
-    uline.
+    ULINE.
   ENDMETHOD.
 ENDCLASS.
 
+
+CLASS waiter DEFINITION.
+
+  PUBLIC SECTION.
+
+    METHODS: constructor IMPORTING WaiterName TYPE String,
+      GoingForTheChef FOR EVENT food_cooked OF chef,
+      GoingForTheCustomer FOR EVENT need_help OF customer IMPORTING TableNumber.
+
+  PROTECTED SECTION.
+    DATA name TYPE string.
+
+ENDCLASS.
+
+
+CLASS waiter IMPLEMENTATION.
+
+
+  METHOD constructor.
+    me->name = WaiterName.
+  ENDMETHOD.
+
+  METHOD GoingForTheChef.
+    WRITE:/ name, 'is running to get the food from the Chef!'.
+    ULINE.
+  ENDMETHOD.
+
+  METHOD GoingForTheCustomer.
+    WRITE: name, 'Is running towards Table:', TableNumber, 'to serve the Customer!'.
+    ULINE.
+  ENDMETHOD.
+
+ENDCLASS.
 
 START-OF-SELECTION.
 
@@ -70,12 +98,23 @@ START-OF-SELECTION.
         customer01 TYPE REF TO customer,
         customer02 TYPE REF TO customer.
 
+DATA: waiter type ref to waiter.
 
-  create Object chef.
-  create Object customer01 exporting
-    TableNumber = 5.
-  create Object customer02 exporting
-    TableNumber = 10.
+  CREATE OBJECT chef.
+
+  CREATE OBJECT customer01
+    EXPORTING
+      TableNumber = 5.
+
+  CREATE OBJECT customer02
+    EXPORTING
+      TableNumber = 10.
+
+create object waiter  "We can't use the Event-Hanlder here or calling them by ourselfves, because"
+  exporting WaiterName = 'Bob'. "That is the Job of the Registerd-Event, that listens to the events and
+                          "Revoke the Hanlder-Method when it is time.... Doing That manuelly is Wrong.
+
+
 
 
   chef->call_waiter( ).
