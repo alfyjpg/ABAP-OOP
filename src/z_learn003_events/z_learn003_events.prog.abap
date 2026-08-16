@@ -86,7 +86,7 @@ CLASS waiter IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD GoingForTheCustomer.
-    WRITE: name, 'Is running towards Table:', TableNumber, 'to serve the Customer!'.
+    WRITE:/ name, 'Is running towards Table:', TableNumber, 'to serve the Customer!'.
     ULINE.
   ENDMETHOD.
 
@@ -114,7 +114,8 @@ create object waiter  "We can't use the Event-Hanlder here or calling them by ou
   exporting WaiterName = 'Bob'. "That is the Job of the Registerd-Event, that listens to the events and
                           "Revoke the Hanlder-Method when it is time.... Doing That manuelly is Wrong.
 
-
+set HANDLER waiter->goingforthechef for chef.
+set handler waiter->goingforthecustomer for all INSTANCES.
 
 
   chef->call_waiter( ).
